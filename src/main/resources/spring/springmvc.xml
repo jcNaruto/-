@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"
+        >
+
+	<context:property-placeholder location="classpath:properties/*.properties" />
+	<context:component-scan base-package="com.jc.laboratory.web" />
+	<!-- 支持异步方法执行 -->
+	
+
+	<mvc:annotation-driven conversion-service="conversionService" />
+	
+	<!-- my project only provide json data -->
+	 <!-- <bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>	  -->
+	
+
+ <mvc:default-servlet-handler/>
+	<!-- 静态资源放行 -->
+	<!-- <mvc:resources location="/resource/" mapping="/resource/**"/> -->
+	<!-- <mvc:resources location="/WEB-INF/css/" mapping="/css/**"/> -->
+
+	<!-- <mvc:interceptors>
+		 <mvc:interceptor>
+		  <mvc:mapping path="/**" />
+		  <mvc:exclude-mapping path="/**/fonts/*"/>
+        <mvc:exclude-mapping path="/**/*.css"/>
+        <mvc:exclude-mapping path="/**/*.js"/>
+         <mvc:exclude-mapping path="/**/*.png"/>
+         <mvc:exclude-mapping path="/**/*.gif"/>
+         <mvc:exclude-mapping path="/**/*.jpg"/>
+         <mvc:exclude-mapping path="/**/*.jpeg"/>
+
+
+		   <mvc:exclude-mapping path="/front/user/register" />
+		   <mvc:exclude-mapping path="/front/user/login" />
+		   <mvc:exclude-mapping path="/front/user/updatepwd" />
+		   <mvc:exclude-mapping path="/front/user/changepwdverify" />
+		   <mvc:exclude-mapping path="/front/user/verifyemail" />
+		   
+		  <bean class="com.jc.laboratory.intercept.LoginInterceptor">
+		  </bean>
+		 </mvc:interceptor>
+		</mvc:interceptors> -->
+
+		<!-- 上传解析器配置id为固定的值否则不能用 -->
+	
+	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="5000000"></property>
+	</bean> 
+ -->
+   <!--转换器的配置有可能会用，当前端的类型和Java类型难以转换时就要自己书写转换器并且配置，详情见springmvcday01  -->
+   <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	<property name="converters">
+		<set>
+			<bean class="com.jc.laboratory.convert.DateConverter"/>
+		</set>
+	</property>
+	</bean>
+	
+	
+</beans>

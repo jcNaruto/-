@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"
+        >
+        <!-- 加载配置文件 -->
+	<!-- <context:property-placeholder location="classpath:properties/mail.properties" /> -->
+     <task:annotation-driven executor="myExecutor" scheduler="myScheduler" />
+	<task:executor id="myExecutor" pool-size="50" />
+	<task:scheduler id="myScheduler" pool-size="1000" />  
+	<!-- 邮件发送器 -->
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    	<!-- 服务器 -->
+       <!--  <property name="host" value="smtp.163.com"></property> -->
+        <property name="host" value="smtp.qq.com"></property>
+        <!-- 端口 -->
+        <property name="port" value="465"></property>
+        <!-- 发送邮件协议 -->
+        <property name="protocol" value="smtp"></property>
+        <!-- 登陆用户名 -->
+        <property name="username" value="${mail.username}"></property>
+        <!-- 密码,此处填写的是客户端授权密码 -->
+        <property name="password" value="${mail.password}"></property>
+        
+        <property name="javaMailProperties">
+            <props>
+            	<!-- 需要验证发件人 -->
+                <prop key="mail.smtps.auth">true</prop>
+                <!-- 开启SSL协议加密码 -->
+                <prop key="mail.smtp.ssl.enable">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+   <!--  
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">  
+       <property name="corePoolSize" value="10"/>  
+       <property name="maxPoolSize" value="30"/>  
+    </bean> -->
+    
+    <!-- 邮件工具类 -->
+    <bean id="mailUtil" class="com.jc.laboratory.util.MailUtil">
+        <property name="javaMailSender" ref="javaMailSender"></property>
+        <!-- <property name="taskExecutor" ref="taskExecutor"></property> -->
+        <property name="from" value="${mail.username}"></property>
+    </bean>
+</beans>

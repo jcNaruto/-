@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jc.laboratory.dao.ManipulationMapper" >
+  <resultMap id="BaseResultMap" type="com.jc.laboratory.entity.Manipulation" >
+    <id column="manipulation_id" property="manipulationId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="function_type" property="functionType" jdbcType="INTEGER" />
+    <result column="box_id" property="boxId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    manipulation_id, user_id, time, function_type, box_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jc.laboratory.entity.ManipulationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from manipulation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from manipulation
+    where manipulation_id = #{manipulationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manipulation
+    where manipulation_id = #{manipulationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jc.laboratory.entity.ManipulationExample" >
+    delete from manipulation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jc.laboratory.entity.Manipulation" >
+    insert into manipulation (manipulation_id, user_id, time, 
+      function_type, box_id)
+    values (#{manipulationId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{functionType,jdbcType=INTEGER}, #{boxId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jc.laboratory.entity.Manipulation" >
+    insert into manipulation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="manipulationId != null" >
+        manipulation_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="functionType != null" >
+        function_type,
+      </if>
+      <if test="boxId != null" >
+        box_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="manipulationId != null" >
+        #{manipulationId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="functionType != null" >
+        #{functionType,jdbcType=INTEGER},
+      </if>
+      <if test="boxId != null" >
+        #{boxId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jc.laboratory.entity.ManipulationExample" resultType="java.lang.Integer" >
+    select count(*) from manipulation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update manipulation
+    <set >
+      <if test="record.manipulationId != null" >
+        manipulation_id = #{record.manipulationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.functionType != null" >
+        function_type = #{record.functionType,jdbcType=INTEGER},
+      </if>
+      <if test="record.boxId != null" >
+        box_id = #{record.boxId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update manipulation
+    set manipulation_id = #{record.manipulationId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      function_type = #{record.functionType,jdbcType=INTEGER},
+      box_id = #{record.boxId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jc.laboratory.entity.Manipulation" >
+    update manipulation
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="functionType != null" >
+        function_type = #{functionType,jdbcType=INTEGER},
+      </if>
+      <if test="boxId != null" >
+        box_id = #{boxId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where manipulation_id = #{manipulationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jc.laboratory.entity.Manipulation" >
+    update manipulation
+    set user_id = #{userId,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      function_type = #{functionType,jdbcType=INTEGER},
+      box_id = #{boxId,jdbcType=INTEGER}
+    where manipulation_id = #{manipulationId,jdbcType=INTEGER}
+  </update>
+</mapper>

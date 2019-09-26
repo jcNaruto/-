@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jc.laboratory.dao.ActivityDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.jc.laboratory.entity.ActivityDetail" >
+    <id column="activity_detail_id" property="activityDetailId" jdbcType="INTEGER" />
+    <result column="week" property="week" jdbcType="VARCHAR" />
+    <result column="day" property="day" jdbcType="VARCHAR" />
+    <result column="activity_order" property="activityOrder" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    activity_detail_id, week, day, activity_order, location, activity_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jc.laboratory.entity.ActivityDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from activity_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_detail
+    where activity_detail_id = #{activityDetailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity_detail
+    where activity_detail_id = #{activityDetailId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jc.laboratory.entity.ActivityDetailExample" >
+    delete from activity_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jc.laboratory.entity.ActivityDetail" >
+    insert into activity_detail (activity_detail_id, week, day, 
+      activity_order, location, activity_id
+      )
+    values (#{activityDetailId,jdbcType=INTEGER}, #{week,jdbcType=VARCHAR}, #{day,jdbcType=VARCHAR}, 
+      #{activityOrder,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jc.laboratory.entity.ActivityDetail" >
+    insert into activity_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityDetailId != null" >
+        activity_detail_id,
+      </if>
+      <if test="week != null" >
+        week,
+      </if>
+      <if test="day != null" >
+        day,
+      </if>
+      <if test="activityOrder != null" >
+        activity_order,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityDetailId != null" >
+        #{activityDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="activityOrder != null" >
+        #{activityOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jc.laboratory.entity.ActivityDetailExample" resultType="java.lang.Integer" >
+    select count(*) from activity_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update activity_detail
+    <set >
+      <if test="record.activityDetailId != null" >
+        activity_detail_id = #{record.activityDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="record.week != null" >
+        week = #{record.week,jdbcType=VARCHAR},
+      </if>
+      <if test="record.day != null" >
+        day = #{record.day,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityOrder != null" >
+        activity_order = #{record.activityOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null" >
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityId != null" >
+        activity_id = #{record.activityId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update activity_detail
+    set activity_detail_id = #{record.activityDetailId,jdbcType=INTEGER},
+      week = #{record.week,jdbcType=VARCHAR},
+      day = #{record.day,jdbcType=VARCHAR},
+      activity_order = #{record.activityOrder,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      activity_id = #{record.activityId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jc.laboratory.entity.ActivityDetail" >
+    update activity_detail
+    <set >
+      <if test="week != null" >
+        week = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        day = #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="activityOrder != null" >
+        activity_order = #{activityOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where activity_detail_id = #{activityDetailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jc.laboratory.entity.ActivityDetail" >
+    update activity_detail
+    set week = #{week,jdbcType=VARCHAR},
+      day = #{day,jdbcType=VARCHAR},
+      activity_order = #{activityOrder,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      activity_id = #{activityId,jdbcType=INTEGER}
+    where activity_detail_id = #{activityDetailId,jdbcType=INTEGER}
+  </update>
+</mapper>

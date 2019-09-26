@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 开启驼峰命名转换table(user_id) entity(userId)  -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- 一个使用jdbc的getgeneratedKey获取数据库主键自增值
+			mapper获取主键的另一种方式
+		-->
+		<!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 ，
+当选择另一种主键自增方式时可以不配置，当然配置了也可以使用另一种主键自增的模式-->
+		<setting name="useGeneratedKeys" value="true" />
+		<!-- 使用列别名替换列名 默认:true -->
+		<setting name="useColumnLabel" value="true" />
+	</settings> 
+   <!-- 别名配置 --> 
+	<typeAliases>
+		<package name="com.jc.laboratory.entity"/>
+	</typeAliases>
+
+	<!-- 分页插件要配置在通用mapper插件前面 -->
+	<!-- pagehelper插件 -->
+	<!-- <plugins>
+	    com.github.pagehelper为PageHelper类所在包名
+	    <plugin interceptor="com.github.pagehelper.PageHelper">
+	        设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库        
+	        <property name="dialect" value="mysql"/>
+	    </plugin> -->
+		
+ 	<!-- 通用mapper接口配置，这是一个GitHub上用来创建通用mapper的，可以用其在动态代理方式中有一个mapper<T> -->
+	<!-- <plugin interceptor="com.github.abel533.mapperhelper.MapperInterceptor">
+			<property name="IDENTITY" value="MYSQL"/>
+			<property name="mappers" value="com.github.abel533.mapper.Mapper"/>
+		</plugin>
+	</plugins>  -->
+
+</configuration>
