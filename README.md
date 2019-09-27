@@ -31,3 +31,98 @@
 1. 校级，省级，国家级相关比赛均有获奖。
 2. 软件著作权正在申请
 3. 校内推广，正在洽谈
+## 5.sql脚本
+```sql
+-- ----------------------------
+-- Table structure for activity
+-- ----------------------------
+DROP TABLE IF EXISTS `activity`;
+CREATE TABLE `activity` (
+  `activity_id` int(255) unsigned NOT NULL AUTO_INCREMENT,
+  `type` tinyint(2) unsigned NOT NULL,
+  `is_abled` tinyint(2) unsigned NOT NULL COMMENT '1可用0禁用',
+  `name` varchar(255) NOT NULL,
+  `rest_number` int(11) unsigned NOT NULL,
+  `max_number` int(11) unsigned NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `teacher` varchar(255) NOT NULL,
+  PRIMARY KEY (`activity_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for activity_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `activity_detail`;
+CREATE TABLE `activity_detail` (
+  `activity_detail_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `week` varchar(255) NOT NULL,
+  `day` varchar(255) NOT NULL,
+  `activity_order` varchar(255) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `activity_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`activity_detail_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for manipulation
+-- ----------------------------
+DROP TABLE IF EXISTS `manipulation`;
+CREATE TABLE `manipulation` (
+  `manipulation_id` int(255) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(255) NOT NULL,
+  `time` datetime NOT NULL,
+  `function_type` tinyint(3) unsigned NOT NULL,
+  `box_id` int(255) unsigned NOT NULL,
+  PRIMARY KEY (`manipulation_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for tool
+-- ----------------------------
+DROP TABLE IF EXISTS `tool`;
+CREATE TABLE `tool` (
+  `box_id` int(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '一个box放一个或一组tool',
+  `name` varchar(255) NOT NULL,
+  `is_borrowed` tinyint(3) unsigned NOT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime DEFAULT NULL COMMENT '上次被借或者被归还时间',
+  PRIMARY KEY (`box_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `user_id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `pwd_hash` varchar(255) NOT NULL,
+  `avatar_hash` varchar(255) NOT NULL,
+  `major` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `is_allowed` int(11) NOT NULL,
+  `role` int(11) NOT NULL,
+  `coin` int(255) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `is_deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `verification_code` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `uk_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for user_activity
+-- ----------------------------
+DROP TABLE IF EXISTS `user_activity`;
+CREATE TABLE `user_activity` (
+  `user_id` varchar(255) NOT NULL,
+  `activity_id` int(255) unsigned NOT NULL,
+  `is_completed` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `score` int(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+
